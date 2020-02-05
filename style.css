@@ -1,0 +1,10 @@
+.container { 
+    max-width: 768px; 
+    margin: auto; 
+    padding: 0px;
+}
+#timercountdownDiv{
+    color: red;
+    font-size: 50px;
+    background-color:  lemonchiffon;
+}
