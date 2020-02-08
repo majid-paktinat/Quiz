@@ -1,4 +1,4 @@
-    let timerInitialValue = 40;
+    let timerInitialValue = 60;
     let countDown = timerInitialValue;
     let interval = 1; // sec
     let flgDeduct = false;   
@@ -102,12 +102,12 @@
         for(key in existing) {
             var infoJSON = existing[key];
             myArrList.push(infoJSON);
-            console.log(infoJSON.Name);
-            console.log(infoJSON.CorrectAnswers);
-            console.log(infoJSON.TimeLeft);
-            console.log(infoJSON.Date);
-            console.log('--------------');
-            console.log(myArrList);
+            // console.log(infoJSON.Name);
+            // console.log(infoJSON.CorrectAnswers);
+            // console.log(infoJSON.TimeLeft);
+            // console.log(infoJSON.Date);
+            // console.log('--------------');
+            // console.log(myArrList);
         }
         
         return myArrList;
