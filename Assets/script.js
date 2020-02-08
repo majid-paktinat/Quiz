@@ -1,4 +1,5 @@
-    let countDown = 75;
+    let timerInitialValue = 40;
+    let countDown = timerInitialValue;
     let interval = 1; // sec
     let flgDeduct = false;   
     let flgFinish = false;
@@ -25,12 +26,7 @@
     let CList = [5,5,2,4,5,3,3,3,2,5];    
     let intervalVar;
 
-    // start quiz | see score board
-    // show the time, show the deduction and the numbe of deduction
-    // if timer stops redirect the page to game over page and ask for the name
-    // write with event delegation
-    // of timeover lock the content or redirect
-    
+    document.querySelector("#myButton").addEventListener("click",saveRecord);
     document.querySelector("#nameDiv").style.opacity = "0";
     document.querySelector("#nameDiv").addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
@@ -41,6 +37,7 @@
         document.getElementById("myButton").click();
         }
     })
+    
 
 
 
@@ -92,6 +89,30 @@
     };
 
 
+    function fetchFromLocalStorageObject (name){
+        // Get the existing data
+        var existing = localStorage.getItem(name);
+
+        // If no existing data, create an array
+        // Otherwise, convert the localStorage string to an array
+        existing = existing ? JSON.parse(existing) : {};
+        
+        let myArrList = [];
+
+        for(key in existing) {
+            var infoJSON = existing[key];
+            myArrList.push(infoJSON);
+            console.log(infoJSON.Name);
+            console.log(infoJSON.CorrectAnswers);
+            console.log(infoJSON.TimeLeft);
+            console.log(infoJSON.Date);
+            console.log('--------------');
+            console.log(myArrList);
+        }
+        
+        return myArrList;
+    }
+
     function startQuiz(){
         document.getElementById("timercountdownDiv").innerHTML = countDown;
         intervalVar = setInterval(myStartTimer, interval*1000);
@@ -130,7 +151,7 @@
         document.getElementById("timercountdownDiv").innerHTML = countDown;
         if (countDown==0){
             myStopTimer();
-            document.getElementById("timercountdownDiv").innerHTML = "Time is Over";
+            //document.getElementById("timercountdownDiv").innerHTML = "Time is Over";
         }
         if (flgFinish) myStopTimer();
     }
@@ -143,11 +164,12 @@
         document.querySelector("#progressDiv").style.height="0";
         document.querySelector("#nameDiv").style.opacity = "1";
         document.querySelector("#questionsDiv").innerHTML = 
-        `<h1 style='text-decoration-line: underline;;'>Game is Over!</h1><br><h2 style='color:blue'>Your score is :</h2><br><h2 style='color:lightgray'>Time Left : ${countDown} out of 75 </h2><br><h2 style='color:lightgray'>Correct Answer : ${Number(document.querySelector("#success").getAttribute("aria-valuenow"))/10} out of 10</h2>`;
+        `<h1 style='text-decoration-line: underline;;'>Game is Over!</h1><br><h2 style='color:blue'>Your score is :</h2><br><h2 style='color:lightgray'>Time Left : ${countDown} out of ${timerInitialValue} </h2><br><h2 style='color:lightgray'>Correct Answer : ${Number(document.querySelector("#success").getAttribute("aria-valuenow"))/10} out of 10</h2>`;
     }
 
     function myDeductTimer(){
-        countDown = countDown - 5; 
+        countDown = countDown - 5;
+        if (countDown < 0)  {countDown=0; myStopTimer();}
         flgDeduct = ! flgDeduct;
         document.getElementById("timercountdownDiv").innerHTML = countDown+(interval);
         console.log("count donw is : " + countDown);
